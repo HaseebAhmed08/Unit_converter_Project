@@ -32,17 +32,13 @@ def convert_units(category, value, from_unit, to_unit):
     
     else:
         return value * (conversions[category][to_unit] / conversions[category][from_unit])
-    
 
-
-
-    st.title("🔄 Unit Converter Web App")
+# Streamlit UI
+st.title("🔄 Unit Converter Web App")
 st.sidebar.header("Select Conversion")
 
 categories = ["Length", "Weight", "Temperature", "Time"]
 category = st.sidebar.selectbox("Choose Category", categories)
-
-
 
 units = {
     "Length": ["Meter", "Kilometer", "Centimeter", "Millimeter", "Mile", "Yard", "Foot", "Inch"],
@@ -51,5 +47,10 @@ units = {
     "Time": ["Second", "Minute", "Hour", "Day"]
 }
 
-
 from_unit = st.selectbox("From", units[category])
+to_unit = st.selectbox("To", units[category])
+value = st.number_input("Enter Value", min_value=0.0, format="%.2f")
+
+if st.button("Convert"):
+    result = convert_units(category, value, from_unit, to_unit)
+    st.success(f"{value} {from_unit} = {result:.2f} {to_unit}")
